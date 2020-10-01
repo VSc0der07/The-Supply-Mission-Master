@@ -4,6 +4,7 @@ const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
+var boxleft , boxright , boxbase
 
 function preload()
 {
@@ -27,14 +28,14 @@ restitution : 1
 	helicopterSprite.addImage(helicopterIMG)
 	helicopterSprite.scale=0.6
 
-	groundSprite=createSprite(width/2, height-35, width,10);
+	groundSprite=createSprite(width/2, height-50, width,10);
 	groundSprite.shapeColor=color(255)
 
 
 	engine = Engine.create();
 	world = engine.world;
 
-	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:3, isStatic:true});
+	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0.2, isStatic:true});
 	World.add(world, packageBody);
 	
 
@@ -45,6 +46,16 @@ restitution : 1
 
 	Engine.run(engine);
   
+boxleft = createSprite(250,600,20,100,{isStatic:true})
+boxleft.shapeColor = "red";
+World.add(world,boxleft);
+boxright = createSprite(450,600,20,100,{isStatic:true})
+boxright.shapeColor = "red";
+World.add(world,boxright);
+boxbase = createSprite(350,650,220,20,{isStatic:true})
+boxbase.shapeColor = "red";
+World.add(world,boxbase);
+
 }
 
 
@@ -63,7 +74,7 @@ function keyPressed() {
  if (keyCode === DOWN_ARROW) {
     // Look at the hints in the document and understand how to make the package body fall only on
 	
-	packageSprite.collide(ground);
+  Matter.Body.setStatic(packageBody,false);
 
   }
 }
